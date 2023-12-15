@@ -1,6 +1,6 @@
 # MySQL HUB
 
-A tool to create an MySQL enviroment to study and make tests.
+A tool to create a MySQL enviroment to study and make tests.
 
 MySQL versions:
 
