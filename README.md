@@ -1,6 +1,6 @@
 # MySQL HUB
 
-A tool to create a MySQL enviroment to study and make tests.
+A tool to create a MySQL environment for studies and tests.
 
 MySQL versions:
 
@@ -9,10 +9,12 @@ MySQL versions:
 
 ## Users and Passwords
 
-| User      |  Password    |
+| User*      |  Password    |
 |-----------|:-------------|
 | root      |  test        |
 | mytest    |  test123     |
+
+**Obs: In professional projects, be careful with using the root user when accessing and manipulating databases.*
 
 ## How to run a MySQL Server
 
