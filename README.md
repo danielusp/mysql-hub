@@ -78,13 +78,13 @@ Run options menu:
 
 Log in as root selecting the option ***[Run] MySQL Client as user root***
 
-On Client interface run SQL commands below:
+On Client interface run SQL command below:
 
 ```sql
 SOURCE sources/example_db_build.sql
 ```
 
-## Use MySQL HUB in a external application
+## Use MySQL HUB in an external application
 
 It's possible access a MySQL HUB database by host IP. To do this follow the instructions below:
 
@@ -111,6 +111,3 @@ It's possible access a MySQL HUB database by host IP. To do this follow the inst
     ```
 
 **Obs: For this procedure you need to have installed in your local machine the mysql Client*
-
-
-https://www.educba.com/mysql-versions/
