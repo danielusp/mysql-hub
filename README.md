@@ -76,10 +76,38 @@ Run options menu:
 ./run.sh
 ```
 
-Select option ***[Run] MySQL Client as user mytest***
+Log in as root selecting the option ***[Run] MySQL Client as user root***
 
 On Client interface run SQL commands below:
 
 ```sql
 SOURCE sources/example_db_build.sql
 ```
+
+## Use MySQL HUB in a external application
+
+It's possible access a MySQL HUB database by host IP. To do this follow the instructions below:
+
+1) Find out the container's IP:
+
+    ```sh
+    ./run.sh
+    ```
+
+    Select option ***[Show] Container's IP***
+
+2) With the IP number, try to connect MySQL:
+
+    ```sh
+    mysql -h [ip-number] -u mytest -p
+    ```
+
+    type the correct password, ie '*test123*'
+
+    Example:
+
+    ```sh
+    mysql -h 172.17.0.2 -u mytest -p
+    ```
+
+**Obs: For this procedure you need to have installed in your local machine the mysql Client*

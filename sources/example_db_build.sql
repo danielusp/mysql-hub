@@ -27,3 +27,8 @@ INSERT INTO PublishingCompany (company_name) VALUES ('Simon & Schuster');
 INSERT INTO Book (title, author, publishing_company_id) VALUES ('1984', 'George Orwell', 1);
 INSERT INTO Book (title, author, publishing_company_id) VALUES ('To Kill a Mockingbird', 'Harper Lee', 2);
 INSERT INTO Book (title, author, publishing_company_id) VALUES ('The Great Gatsby', 'F. Scott Fitzgerald', 3);
+
+-- 
+-- Privileges to user mytest
+-- 
+GRANT ALL PRIVILEGES ON *.* TO 'mytest'@'%';
