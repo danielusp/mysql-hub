@@ -14,7 +14,7 @@ MySQL versions:
 | root      |  test        |
 | mytest    |  test123     |
 
-**Obs: In professional projects, be careful with using the root user when accessing and manipulating databases.*
+**Obs: In professional projects, be careful using the root user when accessing and manipulating databases.*
 
 ## How to run a MySQL Server
 
@@ -111,3 +111,6 @@ It's possible access a MySQL HUB database by host IP. To do this follow the inst
     ```
 
 **Obs: For this procedure you need to have installed in your local machine the mysql Client*
+
+
+https://www.educba.com/mysql-versions/
