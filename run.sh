@@ -1,10 +1,6 @@
 #!/bin/bash
 
-### Variables
-USER="mytest"
-PASS="test123"
-ROOT_PASS="test"
-CONTAINER_NAME="mysql-hub"
+source .env
 
 ### Verify if container is running
 CONTAINER_STATUS=false
