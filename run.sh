@@ -6,6 +6,10 @@ PASS="test123"
 ROOT_PASS="test"
 CONTAINER_NAME="mysql-hub"
 
+### Verify if container is running
+CONTAINER_STATUS=false
+CONTAINER_STATUS=$(docker inspect -f '{{.State.Running}}' ${CONTAINER_NAME} 2>/dev/null)
+
 ### Options
 PS3="Select an option: "
 OP=(
@@ -24,7 +28,12 @@ select OPT in "${OP[@]}"
 do
 	case $OPT in
     	"[Run] MySQL 8.0.31 Server")
-            docker volume create mysql-hub-8_0_31
+			# Stop a container if it's running
+			if [ ${CONTAINER_STATUS} ]; then
+				docker stop ${CONTAINER_NAME}
+			fi
+
+			docker volume create mysql-hub-8_0_31
 			docker run -d --rm \
 			--name ${CONTAINER_NAME} \
 			-e MYSQL_USER=${USER} \
@@ -37,7 +46,12 @@ do
 			break
 			;;
 		"[Run] MySQL 5.7.43 Server")
-            docker volume create mysql-hub-5_7_43
+            # Stop a container if it's running
+			if [ ${CONTAINER_STATUS} ]; then
+				docker stop ${CONTAINER_NAME}
+			fi
+
+			docker volume create mysql-hub-5_7_43
 			docker run -d --rm \
 			--name ${CONTAINER_NAME} \
 			-e MYSQL_USER=${USER} \
@@ -69,7 +83,11 @@ do
 			break
 			;;
     	"[Stop] MySQL Server")
-            docker stop ${CONTAINER_NAME}
+			if [ ${CONTAINER_STATUS} ]; then
+				docker stop ${CONTAINER_NAME}
+			else
+				echo "There is no ${CONTAINER_NAME} running."
+			fi
 			break
 			;;
 		"[Remove] Volumes")
