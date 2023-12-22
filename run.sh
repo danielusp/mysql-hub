@@ -2,6 +2,8 @@
 
 source .env
 
+ERROR_MESSAGE="There is no ${CONTAINER_NAME} running."
+
 ### Verify if container is running
 CONTAINER_STATUS=false
 CONTAINER_STATUS=$(docker inspect -f '{{.State.Running}}' ${CONTAINER_NAME} 2>/dev/null)
@@ -60,21 +62,37 @@ do
 			break
 			;;
 		"[Run] MySQL Client as user $USER")
-            docker exec -it ${CONTAINER_NAME} mysql -u ${USER} -p
+            if [ ${CONTAINER_STATUS} ]; then
+				docker exec -it ${CONTAINER_NAME} mysql -u ${USER} -p
+			else
+				echo $ERROR_MESSAGE
+			fi
 			break
 			;;
 		"[Run] MySQL Client as user root")
-            docker exec -it ${CONTAINER_NAME} mysql -u root -p
+			if [ ${CONTAINER_STATUS} ]; then
+				docker exec -it ${CONTAINER_NAME} mysql -u root -p
+			else
+				echo $ERROR_MESSAGE
+			fi
 			break
 			;;
 		"Enter into MySQL Server's container using Shell")
-			docker exec -it ${CONTAINER_NAME} /bin/bash
+			if [ ${CONTAINER_STATUS} ]; then
+				docker exec -it ${CONTAINER_NAME} /bin/bash
+			else
+				echo $ERROR_MESSAGE
+			fi
 			break
 			;;
 		"[Show] Container's IP")
-			IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${CONTAINER_NAME})
+			if [ ${CONTAINER_STATUS} ]; then
+				IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${CONTAINER_NAME})
 
-			echo "Container ${CONTAINER_NAME} has IP $IP"
+				echo "Container ${CONTAINER_NAME} has IP $IP"
+			else
+				echo $ERROR_MESSAGE
+			fi
 
 			break
 			;;
@@ -82,7 +100,7 @@ do
 			if [ ${CONTAINER_STATUS} ]; then
 				docker stop ${CONTAINER_NAME}
 			else
-				echo "There is no ${CONTAINER_NAME} running."
+				echo $ERROR_MESSAGE
 			fi
 			break
 			;;
