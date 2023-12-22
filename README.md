@@ -6,6 +6,8 @@ MySQL versions:
 
 - 8.0.31
 - 5.7.43
+- 5.6
+- 5.5
 
 ## Users and Passwords
 
@@ -24,7 +26,7 @@ Run options menu:
 ./run.sh
 ```
 
-Select option ***[Run] MySQL 8.0.31 Server*** or ***[Run] MySQL 5.7.43 Server***
+Select ***[Run] MySQL 8.0.31 Server***, ***[Run] MySQL 5.7.43 Server*** or the other options
 
 ## How to run a MySQL Client
 

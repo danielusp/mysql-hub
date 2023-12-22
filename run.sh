@@ -11,8 +11,10 @@ CONTAINER_STATUS=$(docker inspect -f '{{.State.Running}}' ${CONTAINER_NAME} 2>/d
 ### Options
 PS3="Select an option: "
 OP=(
-    "[Run] MySQL 8.0.31 Server"
-	"[Run] MySQL 5.7.43 Server"
+    "[Server] MySQL 8.0.31"
+	"[Server] MySQL 5.7.43"
+	"[Server] MySQL 5.6"
+	"[Server] MySQL 5.5"
 	"[Run] MySQL Client as user $USER"
 	"[Run] MySQL Client as user root"
     "Enter into MySQL Server's container using Shell"
@@ -25,7 +27,7 @@ OP=(
 select OPT in "${OP[@]}"
 do
 	case $OPT in
-    	"[Run] MySQL 8.0.31 Server")
+    	"[Server] MySQL 8.0.31")
 			# Stop a container if it's running
 			if [ ${CONTAINER_STATUS} ]; then
 				docker stop ${CONTAINER_NAME}
@@ -43,7 +45,7 @@ do
 			mysql:8.0.31
 			break
 			;;
-		"[Run] MySQL 5.7.43 Server")
+		"[Server] MySQL 5.7.43")
             # Stop a container if it's running
 			if [ ${CONTAINER_STATUS} ]; then
 				docker stop ${CONTAINER_NAME}
@@ -59,6 +61,42 @@ do
 			-v ${PWD}/configs/5.7:/etc/mysql/conf.d \
 			-v ${PWD}/sources:/sources \
 			mysql:5.7.43
+			break
+			;;
+		"[Server] MySQL 5.6")
+            # Stop a container if it's running
+			if [ ${CONTAINER_STATUS} ]; then
+				docker stop ${CONTAINER_NAME}
+			fi
+
+			docker volume create mysql-hub-5_6
+			docker run -d --rm \
+			--name ${CONTAINER_NAME} \
+			-e MYSQL_USER=${USER} \
+			-e MYSQL_PASSWORD=${PASS} \
+			-e MYSQL_ROOT_PASSWORD=${ROOT_PASS} \
+			-v mysql-hub-5_6:/var/lib/mysql \
+			-v ${PWD}/configs/5.6:/etc/mysql/conf.d \
+			-v ${PWD}/sources:/sources \
+			mysql:5.6
+			break
+			;;
+		"[Server] MySQL 5.5")
+            # Stop a container if it's running
+			if [ ${CONTAINER_STATUS} ]; then
+				docker stop ${CONTAINER_NAME}
+			fi
+
+			docker volume create mysql-hub-5_5
+			docker run -d --rm \
+			--name ${CONTAINER_NAME} \
+			-e MYSQL_USER=${USER} \
+			-e MYSQL_PASSWORD=${PASS} \
+			-e MYSQL_ROOT_PASSWORD=${ROOT_PASS} \
+			-v mysql-hub-5_5:/var/lib/mysql \
+			-v ${PWD}/configs/5.5:/etc/mysql/conf.d \
+			-v ${PWD}/sources:/sources \
+			mysql:5.5
 			break
 			;;
 		"[Run] MySQL Client as user $USER")
@@ -107,6 +145,8 @@ do
 		"[Remove] Volumes")
 			docker volume rm mysql-hub-8_0_31
 			docker volume rm mysql-hub-5_7_43
+			docker volume rm mysql-hub-5_6
+			docker volume rm mysql-hub-5_5
 			break
 			;;
 		"Quit")
